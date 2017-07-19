@@ -23,8 +23,12 @@ var db = require('./models');
 
 var profile = [
   {
-  firsrName: "Chris",
-  lastName: "Pinotti"
+  name : "Chris Pinotti",
+  githubUsername : "cpinotti",
+  githubLink : "https://github.com/ccpinotti",
+  githubProfileImage : "https://avatars2.githubusercontent.com/u/28356319?v=4&s=460",
+  personalSiteLink : "https://github.com/ccpinotti/ccpinotti.github.io",
+  currentCity : "San Francisco"
 }];
 /**********
  * ROUTES *
@@ -97,8 +101,15 @@ app.get('/api/profile', function(req, res) {
   res.json(profile)
 });
 // get all movies
-app.get('/api/movies',function (req, res){
-  res.json(movies);
+app.get('/api/movie',function (req, res){
+  db.Movie.find({}, function(err, movies){
+    if (err){
+      res.status(500).json({error:err.message});
+    }
+    else {
+      res.json(movies);
+    }
+  })
 });
 // get one movies
 app.get('/api/movie/:id', function (req, res){
@@ -115,11 +126,19 @@ app.post('/api/movies', function (req, res){
     releaseDate: req.body.realeaseDate,
     description: req.body.description
   });
+  Movie.save(function(err, book){
+    if (err) {
+      return console.log("save error: " + err);
+    }
+    console.log("saved ", Movie.title);
+    // send back the book!
+    res.json(movie);
+  });
 });
 // delete movie
 app.delete('/api/books/:id', function(req, res){
-  var movieId = req.params.id;
-  db.Movies.findOneAndRemove({ _id: kmovieId })
+  var movieId = req.params.title;
+  db.Movies.findOneAndRemove({title: movieTitle })
   .exec(function (err, deletedMovie){
     res.json(deletedMovie)
   });

@@ -3,7 +3,7 @@
 
 var db = require('./models');
 
-var movies_list = [
+var movie_list = [
   {
     title: "Matrix",
     director: "Lana Wachowski, Lilly Wachowski",
@@ -33,11 +33,14 @@ var movies_list = [
     description: "Action, Adventure, Fantasy"
   }
 ];
-// db.Campsite.create(new_campsite, function(err, campsite){
-//   if (err){
-//     return console.log("Error:", err);
-//   }
+db.Movie.remove({}, function(err,movies){
 
-//   console.log("Created new campsite", campsite._id)
-//   process.exit(); // we're all done! Exit the program.
-// })
+   db.Movie.create(movie_list, function(err, movie){
+     if (err){
+         return console.log("Error:", err);
+       }
+
+   console.log("Create all movie")
+   process.exit(); // we're all done! Exit the program.
+  });
+});
