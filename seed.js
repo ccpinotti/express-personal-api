@@ -3,7 +3,7 @@
 
 var db = require('./models');
 
-var new_campsite = [
+var movies_list = [
   {
     title: "Matrix",
     director: "Lana Wachowski, Lilly Wachowski",

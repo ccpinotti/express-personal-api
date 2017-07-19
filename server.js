@@ -21,6 +21,11 @@ app.use(function(req, res, next) {
 
 var db = require('./models');
 
+var profile = [
+  {
+  firsrName: "Chris",
+  lastName: "Pinotti"
+}];
 /**********
  * ROUTES *
  **********/
@@ -87,12 +92,16 @@ app.get('/api', function apiIndex(req, res) {
 app.get('/', function(req, res){
   res.sendFile('views/index.html' , { root : __dirname});
 });
+// get profile
+app.get('/api/profile', function(req, res) {
+  res.json(profile)
+});
 // get all movies
 app.get('/api/movies',function (req, res){
   res.json(movies);
 });
 // get one movies
-app.get('/api/movies/:id', function (req, res){
+app.get('/api/movie/:id', function (req, res){
   db.Movie.findOne({_id: req.params.id}, function(err, data){
     res.json(data);
   });
@@ -110,7 +119,7 @@ app.post('/api/movies', function (req, res){
 // delete movie
 app.delete('/api/books/:id', function(req, res){
   var movieId = req.params.id;
-  db.Movies.findOneAndRemove({ _id:bookId })
+  db.Movies.findOneAndRemove({ _id: kmovieId })
   .exec(function (err, deletedMovie){
     res.json(deletedMovie)
   });
