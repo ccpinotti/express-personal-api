@@ -97,6 +97,24 @@ app.get('/api/movies/:id', function (req, res){
     res.json(data);
   });
 });
+// create new movies
+app.post('/api/movies', function (req, res){
+  var newMovie = new db.Movie({
+    title: req.body.title,
+    director: req.body.director,
+    actors: req.body.actors,
+    releaseDate: req.body.realeaseDate,
+    description: req.body.description
+  });
+});
+// delete movie
+app.delete('/api/books/:id', function(req, res){
+  var movieId = req.params.id;
+  db.Movies.findOneAndRemove({ _id:bookId })
+  .exec(function (err, deletedMovie){
+    res.json(deletedMovie)
+  });
+});
 /**********
  * SERVER *
  **********/
