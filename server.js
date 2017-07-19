@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
 
 /**********
  * ROUTES *
@@ -60,7 +60,7 @@ app.get('/api', function apiIndex(req, res) {
         method: "GET",
         path: "/api/profile",
         description: "Data about me"
-    }, // CHANGE ME
+    },
       {
         method: "GET",
         path: "/api/movies",
@@ -84,7 +84,19 @@ app.get('/api', function apiIndex(req, res) {
     ]
   })
 });
-
+app.get('/', function(req, res){
+  res.sendFile('views/index.html' , { root : __dirname});
+});
+// get all movies
+app.get('/api/movies',function (req, res){
+  res.json(movies);
+});
+// get one movies
+app.get('/api/movies/:id', function (req, res){
+  db.Movie.findOne({_id: req.params.id}, function(err, data){
+    res.json(data);
+  });
+});
 /**********
  * SERVER *
  **********/
